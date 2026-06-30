@@ -7,9 +7,10 @@ namespace FlixTech\AvroSerializer\Integrations\Symfony\Serializer\NameConverter;
 use FlixTech\AvroSerializer\Integrations\Symfony\Serializer\AvroSerDeEncoder;
 use FlixTech\AvroSerializer\Objects\Schema\AttributeName;
 use FlixTech\AvroSerializer\Objects\Schema\Generation\SchemaAttributeReader;
-use Symfony\Component\Serializer\NameConverter\AdvancedNameConverterInterface;
+use ReflectionException;
+use Symfony\Component\Serializer\NameConverter\NameConverterInterface;
 
-class AvroNameConverter implements AdvancedNameConverterInterface
+class AvroNameConverter implements NameConverterInterface
 {
     private SchemaAttributeReader $attributeReader;
 
@@ -24,12 +25,12 @@ class AvroNameConverter implements AdvancedNameConverterInterface
     }
 
     /**
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     public function normalize(
         string $propertyName,
-        string $class = null,
-        string $format = null,
+        ?string $class = null,
+        ?string $format = null,
         array $context = []
     ): string {
         return $this
@@ -38,7 +39,7 @@ class AvroNameConverter implements AdvancedNameConverterInterface
     }
 
     /**
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     private function getNameMap(?string $class, ?string $format): PropertyNameMap
     {
@@ -54,7 +55,7 @@ class AvroNameConverter implements AdvancedNameConverterInterface
     }
 
     /**
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     private function generateMap(string $class): PropertyNameMap
     {
@@ -98,12 +99,12 @@ class AvroNameConverter implements AdvancedNameConverterInterface
     }
 
     /**
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     public function denormalize(
         string $propertyName,
-        string $class = null,
-        string $format = null,
+        ?string $class = null,
+        ?string $format = null,
         array $context = []
     ): string {
         return $this
